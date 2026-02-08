@@ -23,6 +23,7 @@ const LazyGallery = lazy(() => import('./components/Gallery'))
 const LazyVideoGallery = lazy(() => import('./components/VideoGallery'))
 const LazyPrivacy = lazy(() => import('./components/PrivacyPolicy'))
 const LazyTerms = lazy(() => import('./components/Terms'))
+const LazyNotFound = lazy(() => import('./components/NotFound'))
 
 import { useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -143,6 +144,11 @@ function AppContent() {
           <Route path="/terms" element={
             <Suspense fallback={<LoadingPlaceholder />}>
               <LazyTerms />
+            </Suspense>
+          } />
+          <Route path="*" element={
+            <Suspense fallback={<LoadingPlaceholder />}>
+              <LazyNotFound />
             </Suspense>
           } />
         </Routes>

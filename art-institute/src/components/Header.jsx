@@ -111,6 +111,36 @@ export default function Header() {
               <span className="text-[11px] sm:text-xs md:text-sm">9168278222</span>
             </a>
 
+            {/* SOCIAL ICONS - Visible on sm and up */}
+            <div className="hidden sm:flex items-center gap-4 text-[13px] md:text-base ml-4 border-l border-white/20 pl-4">
+              <a
+                href="https://www.facebook.com/Ompaitingclasses/"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-yellow-400 transition"
+              >
+                <FaFacebookF />
+              </a>
+
+              <a
+                href="https://www.instagram.com/7_shades_art_studio/"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-yellow-400 transition"
+              >
+                <FaInstagram />
+              </a>
+
+              <a
+                href="https://www.youtube.com/@7shadesartstudio875"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-yellow-400 transition"
+              >
+                <FaYoutube />
+              </a>
+            </div>
+
           </div>
 
         </div>
