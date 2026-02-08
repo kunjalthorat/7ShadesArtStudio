@@ -1,11 +1,12 @@
 import { motion } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import heroVideo from "../assets/videos/Hero_video.mp4"
+import heroPoster from "../assets/team/Hero.jpeg"
 
 export default function Hero() {
   const videoRef = useRef(null)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isVideoReady, setIsVideoReady] = useState(false)
   const navigate = useNavigate()
 
   const handleNavigate = (path) => {
@@ -13,39 +14,36 @@ export default function Hero() {
     navigate(path)
   }
 
-  useEffect(() => {
-    const video = videoRef.current
-    if (video) {
-      const playVideo = () => {
-        video.play().catch(err => console.log("Autoplay prevented:", err))
-      }
-
-      video.addEventListener("canplay", playVideo)
-      playVideo()
-
-      return () => video.removeEventListener("canplay", playVideo)
-    }
-  }, [])
-
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black">
+    <section className="relative h-screen w-full overflow-hidden bg-[#0F2A44]">
 
-      {/* Background Video */}
+      {/* Placeholder Poster Image (Landed Instantly) */}
+      <div
+        className={`absolute inset-0 z-0 transition-opacity duration-1000 ${isVideoReady ? 'opacity-0' : 'opacity-100'}`}
+      >
+        <img
+          src={heroPoster}
+          alt="Hero Placeholder"
+          className="w-full h-full object-cover brightness-75"
+        />
+      </div>
+
+      {/* Background Video (Buffers and Fades In) */}
       <video
         ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
-        onLoadedMetadata={() => setIsLoaded(true)}
-        className="absolute inset-0 w-full h-full object-cover brightness-90"
+        onCanPlayThrough={() => setIsVideoReady(true)}
+        className={`absolute inset-0 w-full h-full object-cover brightness-90 z-[1] transition-opacity duration-1000 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
         preload="auto"
       >
         <source src={heroVideo} type="video/mp4" />
       </video>
 
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
+      {/* Dark Overlay (Consistently over both) */}
+      <div className="absolute inset-0 bg-black/50 z-[2]" />
 
       {/* Content */}
       <div className="relative z-10 h-full flex items-center justify-center px-6 sm:px-10 md:px-16">
