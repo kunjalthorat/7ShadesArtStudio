@@ -50,7 +50,8 @@ const categories = [
 ]
 
 export default function Courses() {
-  const trackRef = useRef(null)
+  const trackRef1 = useRef(null)
+  const trackRef2 = useRef(null)
   const navigate = useNavigate()
   const backgroundImage = `url(${bgYellow})`
 
@@ -60,91 +61,133 @@ export default function Courses() {
   }
 
   useEffect(() => {
-    const track = trackRef.current
-    const totalWidth = track.scrollWidth / 2
+    const isMobile = window.innerWidth < 768
+    const isTablet = window.innerWidth < 1024
 
-    const tween = gsap.to(track, {
-      x: -totalWidth,
-      duration: 25,
-      ease: "linear",
-      repeat: -1
-    })
+    // Speed is inversely proportional to width (smaller width = faster/shorter duration)
+    // Mobile: 16s, Tablet: 22s, Desktop: 30s
+    const speed = isMobile ? 16 : (isTablet ? 22 : 30)
 
-    track.addEventListener("mouseenter", () => tween.pause())
-    track.addEventListener("mouseleave", () => tween.play())
+    const setupTrack = (track, direction = -1) => {
+      if (!track) return
+      const totalWidth = track.scrollWidth / 2
 
-    return () => tween.kill()
+      // Normalize start and end based on direction to ensure same distance/speed
+      // Left (-1): 0 -> -totalWidth
+      // Right (1): -totalWidth -> 0
+      const startX = direction === -1 ? 0 : -totalWidth
+      const endX = direction === -1 ? -totalWidth : 0
+
+      const tween = gsap.fromTo(track,
+        { x: startX },
+        {
+          x: endX,
+          duration: speed,
+          ease: "linear",
+          repeat: -1
+        }
+      )
+
+      track.addEventListener("mouseenter", () => tween.pause())
+      track.addEventListener("mouseleave", () => tween.play())
+      return tween
+    }
+
+    const t1 = setupTrack(trackRef1.current, -1)
+    const t2 = setupTrack(trackRef2.current, 1)
+
+    return () => {
+      if (t1) t1.kill()
+      if (t2) t2.kill()
+    }
   }, [])
+
+  // Split categories for the two rows if needed, or just use same for both
+  const row1 = categories
+  const row2 = [...categories].reverse()
 
   return (
     <section
-      className="relative min-h-screen bg-[#f2f2f2] text-black overflow-hidden bg-cover bg-center bg-no-repeat"
+      className="relative min-h-screen bg-[#f2f2f2] text-black overflow-hidden bg-cover bg-center bg-no-repeat flex flex-col justify-center py-12"
       style={{ backgroundImage }}
     >
       {/* TITLE */}
-      <div className="text-center py-6 sm:py-8">
+      <div className="text-center mb-8">
         <h2 className="text-3xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-[#1F5C8C] to-[#0F2A44] bg-clip-text text-transparent">Creative Courses</h2>
       </div>
 
-      {/* CENTERED SLIDER */}
-      <div className="h-full items-center">
-        <div
-          ref={trackRef}
-          className="flex px-10 h-[320px] w-max items-center gap-8"
-        >
-          {[...categories, ...categories].map((cat, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              onClick={() => handleCourseClick(cat.title)}
-              className="cursor-pointer w-[260px] sm:w-[300px] h-[260px] sm:h-[280px] bg-white rounded-xl overflow-hidden shadow-md flex flex-col"
-            >
+      {/* DUAL SLIDERS */}
+      <div className="flex flex-col gap-6 sm:gap-10">
 
-              {/* Image */}
-              <div className="w-full aspect-[4/3] overflow-hidden">
-                <img
-                  src={cat.image}
-                  alt={cat.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Text */}
-              <div className="p-5 flex flex-col flex-1 justify-between">
-
-                <h3 className="text-base font-extrabold uppercase tracking-wide leading-tight line-clamp-2">
-                  {cat.title}
-                </h3>
-
-                <p className="text-black/70 text-xs font-normal leading-relaxed line-clamp-4">
-                  {cat.desc}
-                </p>
-
-              </div>
-
-            </motion.div>
-          ))}
+        {/* ROW 1: Moves Left */}
+        <div className="w-full overflow-hidden">
+          <div
+            ref={trackRef1}
+            className="flex px-10 h-[260px] sm:h-[300px] w-max items-center gap-6 sm:gap-8"
+          >
+            {[...row1, ...row1].map((cat, i) => (
+              <motion.div
+                key={`r1-${i}`}
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                onClick={() => handleCourseClick(cat.title)}
+                className="cursor-pointer w-[240px] sm:w-[300px] h-[220px] sm:h-[280px] bg-white rounded-xl overflow-hidden shadow-md flex flex-col flex-shrink-0"
+              >
+                <div className="w-full aspect-[16/9] overflow-hidden">
+                  <img src={cat.image} alt={cat.title} loading="lazy" className="w-full h-full object-cover" />
+                </div>
+                <div className="p-4 flex flex-col flex-1 justify-center">
+                  <h3 className="text-sm sm:text-base font-extrabold uppercase tracking-tight leading-tight line-clamp-1">{cat.title}</h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
+
+        {/* ROW 2: Moves Right (Visible on mobile/tablet, hidden on large screens) */}
+        <div className="w-full overflow-hidden lg:hidden">
+          <div
+            ref={trackRef2}
+            className="flex px-10 h-[260px] sm:h-[300px] w-max items-center gap-6 sm:gap-8"
+          >
+            {[...row2, ...row2].map((cat, i) => (
+              <motion.div
+                key={`r2-${i}`}
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                onClick={() => handleCourseClick(cat.title)}
+                className="cursor-pointer w-[240px] sm:w-[300px] h-[220px] sm:h-[280px] bg-white rounded-xl overflow-hidden shadow-md flex flex-col flex-shrink-0"
+              >
+                <div className="w-full aspect-[16/9] overflow-hidden">
+                  <img src={cat.image} alt={cat.title} loading="lazy" className="w-full h-full object-cover" />
+                </div>
+                <div className="p-4 flex flex-col flex-1 justify-center">
+                  <h3 className="text-sm sm:text-base font-extrabold uppercase tracking-tight leading-tight line-clamp-1">{cat.title}</h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
       </div>
 
       {/* BOTTOM BANNER */}
-      <motion.div
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2
-        max-w-5xl w-[90%]
-        bg-gradient-to-r from-[#1F5C8C] to-[#0F2A44]
-        text-white
-        px-4 md:px-8 py-3 md:py-4
-        text-xs sm:text-base md:text-lg
-        tracking-wide font-semibold
-        shadow-2xl
-        text-center leading-tight rounded-lg"
-      >
-        ELEMENTARY & INTERMEDIATE GRADE EXAM PREPARATION (GOVT. OF MAHARASHTRA)
-      </motion.div>
+      <div className="mt-12 flex justify-center px-4">
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="max-w-5xl w-full
+          bg-gradient-to-r from-[#1F5C8C] to-[#0F2A44]
+          text-white
+          px-6 py-4
+          text-xs sm:text-sm md:text-base
+          tracking-wider font-bold
+          shadow-xl
+          text-center leading-tight rounded-xl"
+        >
+          ELEMENTARY & INTERMEDIATE GRADE EXAM PREPARATION (GOVT. OF MAHARASHTRA)
+        </motion.div>
+      </div>
 
     </section>
   )

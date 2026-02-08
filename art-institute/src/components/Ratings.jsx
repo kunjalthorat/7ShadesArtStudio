@@ -38,34 +38,67 @@ const reviews = [
 ]
 
 export default function Ratings() {
-  const trackRef = useRef(null)
+  const trackRef1 = useRef(null)
+  const trackRef2 = useRef(null)
 
   useEffect(() => {
-    const track = trackRef.current
-    if (!track) return
+    const isMobile = window.innerWidth < 768
+    const isTablet = window.innerWidth < 1024
 
-    const totalWidth = track.scrollWidth / 2
+    // Aligned with Courses speed logic
+    const duration = isMobile ? 18 : (isTablet ? 26 : 40)
 
-    const tween = gsap.to(track, {
-      x: -totalWidth,
-      duration: 40,
-      ease: "linear",
-      repeat: -1
-    })
+    const setupTrack = (track, direction = -1) => {
+      if (!track) return
+      const totalWidth = track.scrollWidth / 2
 
-    track.addEventListener("mouseenter", () => tween.pause())
-    track.addEventListener("mouseleave", () => tween.play())
+      // Left (-1): 0 -> -totalWidth
+      // Right (1): -totalWidth -> 0
+      const startX = direction === -1 ? 0 : -totalWidth
+      const endX = direction === -1 ? -totalWidth : 0
+
+      const tween = gsap.fromTo(track,
+        { x: startX },
+        {
+          x: endX,
+          duration: duration,
+          ease: "linear",
+          repeat: -1
+        }
+      )
+
+      const pause = () => tween.pause()
+      const play = () => tween.play()
+
+      track.addEventListener("mouseenter", pause)
+      track.addEventListener("mouseleave", play)
+      return { tween, pause, play }
+    }
+
+    const t1 = setupTrack(trackRef1.current, -1)
+    const t2 = setupTrack(trackRef2.current, 1)
 
     return () => {
-      track.removeEventListener("mouseenter", () => tween.pause())
-      track.removeEventListener("mouseleave", () => tween.play())
-      tween.kill()
+      if (t1) {
+        trackRef1.current?.removeEventListener("mouseenter", t1.pause)
+        trackRef1.current?.removeEventListener("mouseleave", t1.play)
+        t1.tween.kill()
+      }
+      if (t2) {
+        trackRef2.current?.removeEventListener("mouseenter", t2.pause)
+        trackRef2.current?.removeEventListener("mouseleave", t2.play)
+        t2.tween.kill()
+      }
     }
   }, [])
 
   const renderStars = (stars) => {
     return "⭐".repeat(stars)
   }
+
+  const row1 = reviews
+  const row2 = [...reviews].reverse()
+
   return (
     <main
       className="bg-white text-black min-h-screen py-16 bg-cover bg-center bg-no-repeat overflow-hidden flex flex-col items-center justify-center"
@@ -94,32 +127,54 @@ export default function Ratings() {
         </motion.div>
       </div>
 
-      {/* PARENT REVIEWS - INFINITE SLIDER */}
-      <div className="flex-1 h-full items-center w-full overflow-hidden">
-        <div
-          ref={trackRef}
-          className="flex px-10 h-[280px] sm:h-[320px] w-max items-center gap-6 sm:gap-8 -mx-10"
-        >
-          {[...reviews, ...reviews].map((review, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.15)" }}
-              className="w-[260px] sm:w-[300px] h-[240px] sm:h-[280px] bg-white rounded-xl shadow-lg p-4 sm:p-5 border-t-4 border-[#1F5C8C] flex flex-col justify-between transition-shadow duration-300 flex-shrink-0"
-            >
-              <div>
-                <p className="text-yellow-400 text-xs sm:text-sm mb-2 sm:mb-3 tracking-wide">{renderStars(review.stars)}</p>
-                <p className="text-black/70 leading-relaxed text-[10px] sm:text-xs font-normal line-clamp-4 sm:line-clamp-none">
-                  "{review.text}"
-                </p>
-              </div>
-              <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
-                <p className="text-xs sm:text-sm font-bold text-[#1F5C8C]">{review.name}</p>
-              </div>
-            </motion.div>
-          ))}
+      {/* PARENT REVIEWS - DUAL INFINITE SLIDERS */}
+      <div className="flex flex-col gap-6 sm:gap-10 w-full overflow-hidden">
+
+        {/* ROW 1: Moves Left */}
+        <div className="w-full">
+          <div
+            ref={trackRef1}
+            className="flex px-10 h-[240px] sm:h-[300px] w-max items-center gap-6 sm:gap-8"
+          >
+            {[...row1, ...row1].map((review, i) => (
+              <ReviewCard key={`r1-${i}`} review={review} renderStars={renderStars} />
+            ))}
+          </div>
         </div>
+
+        {/* ROW 2: Moves Right - Hidden on LG screens */}
+        <div className="w-full lg:hidden">
+          <div
+            ref={trackRef2}
+            className="flex px-10 h-[240px] sm:h-[320px] w-max items-center gap-6 sm:gap-8"
+          >
+            {[...row2, ...row2].map((review, i) => (
+              <ReviewCard key={`r2-${i}`} review={review} renderStars={renderStars} />
+            ))}
+          </div>
+        </div>
+
       </div>
 
     </main>
+  )
+}
+
+function ReviewCard({ review, renderStars }) {
+  return (
+    <motion.div
+      whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.15)" }}
+      className="w-[260px] sm:w-[300px] h-[220px] sm:h-[280px] bg-white rounded-xl shadow-lg p-4 sm:p-5 border-t-4 border-[#1F5C8C] flex flex-col justify-between transition-shadow duration-300 flex-shrink-0"
+    >
+      <div>
+        <p className="text-yellow-400 text-xs sm:text-sm mb-2 sm:mb-3 tracking-wide">{renderStars(review.stars)}</p>
+        <p className="text-black/70 leading-relaxed text-[10px] sm:text-xs font-normal line-clamp-4">
+          "{review.text}"
+        </p>
+      </div>
+      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
+        <p className="text-xs sm:text-sm font-bold text-[#1F5C8C]">{review.name}</p>
+      </div>
+    </motion.div>
   )
 }
