@@ -73,44 +73,43 @@ export default function Header() {
       <div
         className="fixed top-0 left-0 w-full z-[60]
   bg-gradient-to-r from-[#1F5C8C] via-[#2F7BC1] to-[#0F2A44]
-  text-white"
+  text-white h-[28px] flex items-center"
       >
         <div
-          className="max-w-7xl mx-auto
-    flex flex-col md:flex-row
-    items-center justify-between
-    gap-1 md:gap-0
-    px-4 py-1 text-xs md:text-sm"
+          className="max-w-7xl mx-auto w-full
+    flex flex-row items-center justify-between
+    px-3 md:px-4 text-[10px] sm:text-xs md:text-sm"
         >
 
           {/* LEFT TEXT */}
-          <div className="font-medium tracking-wide">
-            Welcome to 7 Shades Art Studio
+          <div className="font-medium tracking-tight truncate mr-1 flex-shrink-0">
+            <span className="hidden sm:inline">Welcome to </span>
+            <span className="text-[9px] sm:text-xs">7 Shades Art Studio</span>
           </div>
 
           {/* RIGHT SIDE */}
-          <div className="flex items-center gap-6 font-medium">
+          <div className="flex items-center gap-3 sm:gap-6 font-medium">
 
             {/* Phone 1 */}
             <a
               href="tel:8390493388"
-              className="flex items-center gap-2 hover:opacity-80 transition"
+              className="flex items-center gap-1 hover:opacity-80 transition whitespace-nowrap"
             >
-              <FaPhoneAlt className="text-sm" />
+              <FaPhoneAlt className="text-[9px] md:text-xs" />
               <span>8390493388</span>
             </a>
 
             {/* Phone 2 */}
             <a
               href="tel:9168278222"
-              className="flex items-center gap-2 hover:opacity-80 transition"
+              className="flex items-center gap-1 hover:opacity-80 transition whitespace-nowrap"
             >
-              <FaPhoneAlt className="text-sm" />
+              <FaPhoneAlt className="text-[9px] md:text-xs" />
               <span>9168278222</span>
             </a>
 
             {/* SOCIAL ICONS */}
-            <div className="flex items-center gap-4 text-base">
+            <div className="flex items-center gap-1.5 sm:gap-4 text-[10px] md:text-base">
 
               <a
                 href="https://www.facebook.com/Ompaitingclasses/"
@@ -163,7 +162,7 @@ export default function Header() {
           }
   `}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-10 py-1">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-10 py-1">
 
           {/* LOGO */}
           <div
@@ -175,7 +174,7 @@ export default function Header() {
               alt="7 Shades Art Studio Logo"
               className="h-10 w-auto object-contain"
             />
-            <span className="tracking-wide text-sm md:text-xl font-medium">
+            <span className="tracking-wide text-xs sm:text-lg md:text-xl font-medium">
               7 Shades Art Studio
             </span>
           </div>
@@ -198,14 +197,16 @@ export default function Header() {
           </ul>
 
           {/* HAMBURGER */}
-          <button
-            className="cursor-pointer md:hidden flex flex-col gap-1"
-            onClick={() => setMenuOpen(true)}
-          >
-            <span className="w-7 h-[2px] bg-current" />
-            <span className="w-7 h-[2px] bg-current" />
-            <span className="w-7 h-[2px] bg-current" />
-          </button>
+          <div className="md:hidden flex items-center h-10">
+            <button
+              className="cursor-pointer relative w-7 h-5 flex flex-col justify-between"
+              onClick={() => setMenuOpen(true)}
+            >
+              <span className="w-full h-[2.5px] bg-current rounded-full" />
+              <span className="w-full h-[2.5px] bg-current rounded-full" />
+              <span className="w-full h-[2.5px] bg-current rounded-full" />
+            </button>
+          </div>
 
         </div>
       </motion.header>
@@ -217,29 +218,60 @@ export default function Header() {
       <motion.div
         initial={{ x: "100%" }}
         animate={{ x: menuOpen ? "0%" : "100%" }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="fixed top-0 right-0 w-full h-screen bg-black text-white z-[70]
-             flex flex-col justify-center items-center space-y-10 text-4xl"
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+        className="fixed top-[28px] right-0 w-full h-[calc(100vh-28px)] z-[70] backdrop-blur-md bg-[#1F5C8C]/95 text-white flex flex-col"
       >
-        <button
-          onClick={() => setMenuOpen(false)}
-          className="cursor-pointer absolute top-6 right-8 text-2xl"
-        >
-          ✕
-        </button>
+        {/* TOP OVERLAP SECTION */}
+        <div className="w-full">
+          <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-10 py-1 h-[48px]">
+            <div className="flex items-center gap-3">
+              <img src={logo} alt="Logo" className="h-10 w-auto object-contain" />
+              <span className="tracking-wide text-xs sm:text-lg md:text-xl font-medium">7 Shades Art Studio</span>
+            </div>
+            <button
+              onClick={() => setMenuOpen(false)}
+              className="cursor-pointer w-7 h-5 flex items-center justify-center text-3xl font-light"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
 
-        {navItems.map((item) => (
-          <span
-            key={item}
-            className="cursor-pointer hover:opacity-70 transition font-medium"
-            onClick={() => {
-              handleNavClick(item)
-              setMenuOpen(false)
-            }}
-          >
-            {item}
-          </span>
-        ))}
+        <div className="flex flex-col flex-1 p-8 pt-10 overflow-y-auto">
+          <div className="flex flex-col space-y-6">
+            {navItems.map((item, index) => (
+              <motion.span
+                key={item}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: menuOpen ? 1 : 0, x: menuOpen ? 0 : 20 }}
+                transition={{ delay: index * 0.1 }}
+                className={`text-2xl font-medium cursor-pointer transition-colors duration-300
+                ${item === activeTab ? "text-yellow-400 pl-4 border-l-4 border-yellow-400" : "hover:text-yellow-200"}`}
+                onClick={() => {
+                  handleNavClick(item)
+                  setMenuOpen(false)
+                }}
+              >
+                {item}
+              </motion.span>
+            ))}
+          </div>
+
+          {/* MOBILE MENU FOOTER */}
+          <div className="mt-auto border-t border-white/20 pt-8 pb-4">
+            <p className="text-xs text-white/70 mb-4 font-semibold uppercase tracking-widest">Connect With Us</p>
+            <div className="flex items-center gap-6 text-2xl">
+              <a href="https://wa.me/919168278222" target="_blank" rel="noreferrer" className="hover:text-yellow-400 transition"><FaWhatsapp /></a>
+              <a href="https://www.facebook.com/Ompaitingclasses/" target="_blank" rel="noreferrer" className="hover:text-yellow-400 transition"><FaFacebookF /></a>
+              <a href="https://www.instagram.com/7_shades_art_studio/" target="_blank" rel="noreferrer" className="hover:text-yellow-400 transition"><FaInstagram /></a>
+              <a href="https://www.youtube.com/@7shadesartstudio875" target="_blank" rel="noreferrer" className="hover:text-yellow-400 transition"><FaYoutube /></a>
+            </div>
+            <div className="mt-6 flex flex-col gap-3 text-sm text-white/80">
+              <a href="tel:8390493388" className="flex items-center gap-2 hover:text-white transition"><FaPhoneAlt size={12} /> 8390493388</a>
+              <a href="tel:9168278222" className="flex items-center gap-2 hover:text-white transition"><FaPhoneAlt size={12} /> 9168278222</a>
+            </div>
+          </div>
+        </div>
       </motion.div>
 
     </>

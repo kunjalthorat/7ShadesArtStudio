@@ -7,9 +7,9 @@ export default function Contact() {
     <main
       className="
     bg-white text-black
-    h-screen
-    px-6 md:px-10
-    py-20
+    min-h-screen
+    px-4 sm:px-6 md:px-10
+    py-16 sm:py-20
     bg-cover bg-center bg-no-repeat
     flex items-start
   "
@@ -47,9 +47,9 @@ export default function Contact() {
           {/* WhatsApp */}
           <div className="bg-white rounded-xl shadow-sm p-5 text-center">
             <MessageCircle size={26} className="mx-auto text-[#25D366] mb-2" />
-            <h3 className="font-semibold text-base">WhatsApp</h3>
-            <p className="text-sm text-black/70">+91 91682 78222</p>
-            <p className="text-sm text-black/70">+91 83904 93388</p>
+            <h3 className="font-semibold text-sm sm:text-base">WhatsApp</h3>
+            <p className="text-xs sm:text-sm text-black/70">+91 91682 78222</p>
+            <p className="text-xs sm:text-sm text-black/70">+91 83904 93388</p>
 
             <a
               href="https://wa.me/919168278222"
@@ -72,8 +72,8 @@ export default function Contact() {
           {/* Email */}
           <div className="bg-white rounded-xl shadow-sm p-5 text-center">
             <Mail size={26} className="mx-auto text-[#EA4335] mb-2" />
-            <h3 className="font-semibold text-base">Email</h3>
-            <p className="text-sm text-black/70">yythorat@gmail.com</p>
+            <h3 className="font-semibold text-sm sm:text-base">Email</h3>
+            <p className="text-xs sm:text-sm text-black/70">yythorat@gmail.com</p>
 
             <a
               href="mailto:yythorat@gmail.com"
@@ -94,9 +94,9 @@ export default function Contact() {
           {/* Call */}
           <div className="bg-white rounded-xl shadow-sm p-5 text-center">
             <Phone size={26} className="mx-auto text-[#1F5C8C] mb-2" />
-            <h3 className="font-semibold text-base">Call Us</h3>
-            <p className="text-sm text-black/70">+91 91682 78222</p>
-            <p className="text-sm text-black/70">+91 83904 93388</p>
+            <h3 className="font-semibold text-sm sm:text-base">Call Us</h3>
+            <p className="text-xs sm:text-sm text-black/70">+91 91682 78222</p>
+            <p className="text-xs sm:text-sm text-black/70">+91 83904 93388</p>
 
             <a
               href="tel:+919168278222"

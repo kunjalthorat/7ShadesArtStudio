@@ -82,8 +82,8 @@ export default function Courses() {
       style={{ backgroundImage }}
     >
       {/* TITLE */}
-      <div className="text-center py-8">
-        <h1 className="text-4xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-[#1F5C8C] to-[#0F2A44] bg-clip-text text-transparent">Our Courses</h1>
+      <div className="text-center py-6 sm:py-8">
+        <h1 className="text-3xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-[#1F5C8C] to-[#0F2A44] bg-clip-text text-transparent">Our Courses</h1>
       </div>
 
       {/* CENTERED SLIDER */}
@@ -98,7 +98,7 @@ export default function Courses() {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               onClick={() => handleCourseClick(cat.title)}
-              className="cursor-pointer w-[300px] h-[280px] bg-white rounded-xl overflow-hidden shadow-md flex flex-col"
+              className="cursor-pointer w-[260px] sm:w-[300px] h-[260px] sm:h-[280px] bg-white rounded-xl overflow-hidden shadow-md flex flex-col"
             >
 
               {/* Image */}
@@ -137,11 +137,11 @@ export default function Courses() {
         max-w-5xl w-[90%]
         bg-gradient-to-r from-[#1F5C8C] to-[#0F2A44]
         text-white
-        px-8 py-4
-        text-base md:text-lg
+        px-4 md:px-8 py-3 md:py-4
+        text-xs sm:text-base md:text-lg
         tracking-wide font-semibold
         shadow-2xl
-        text-center whitespace-nowrap rounded-lg"
+        text-center leading-tight rounded-lg"
       >
         ELEMENTARY & INTERMEDIATE GRADE EXAM PREPARATION (GOVT. OF MAHARASHTRA)
       </motion.div>

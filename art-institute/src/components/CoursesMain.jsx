@@ -4,8 +4,8 @@ import { ChevronDown, Palette, Brush } from "lucide-react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 
 const handleScrollAndNavigate = (navigate, path) => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-  navigate(path)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    navigate(path)
 }
 
 const courseCategories = {
@@ -111,7 +111,7 @@ export default function CoursesMain() {
 
     return (
         <main
-            className="bg-white text-black min-h-screen px-6 md:px-10 pt-24 pb-8"
+            className="bg-white text-black min-h-screen px-4 sm:px-6 md:px-10 pt-20 sm:pt-24 pb-8"
         >
             <div className="max-w-6xl mx-auto">
                 {/* HEADER */}
@@ -128,7 +128,7 @@ export default function CoursesMain() {
                             Discover Your Artistic Journey
                         </p>
 
-                        <h1 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text 
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text 
       bg-gradient-to-r from-[#1F5C8C] via-[#0F2A44] to-[#1F5C8C] mb-2 leading-tight">
                             Master Creative <span className="italic">& Academic</span> Skills
                         </h1>

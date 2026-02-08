@@ -41,17 +41,17 @@ export default function WhyChoose() {
 
   return (
     <main
-      className="bg-white text-black min-h-screen px-10 py-24 bg-cover bg-center bg-no-repeat"
+      className="bg-white text-black min-h-screen px-4 md:px-10 py-16 md:py-24 bg-cover bg-center bg-no-repeat overflow-x-hidden"
       style={{ backgroundImage: `url(${bgPink})` }}
     >
       {/* HEADER */}
       <motion.section
-        className="text-center mb-10"
+        className="text-center mb-8 sm:mb-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+        <h1 className="text-3xl md:text-5xl font-bold leading-tight">
           Why Choose{" "}
           <span className="bg-gradient-to-r from-[#1F5C8C] to-[#0F2A44] bg-clip-text text-transparent">Us?</span>
         </h1>
@@ -61,7 +61,7 @@ export default function WhyChoose() {
       <section className="max-w-6xl mx-auto flex flex-col gap-8">
 
         {/* TOP STATS */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-4 md:gap-6">
 
           <motion.div
             initial={{ x: -60, opacity: 0 }}
@@ -69,14 +69,14 @@ export default function WhyChoose() {
             whileHover={{ scale: 1.03 }}
             whileFocus={{ scale: 1.03 }}
             transition={{ type: "spring", stiffness: 250, damping: 18 }}
-            className="bg-white rounded-xl shadow-md p-4 h-[90px]
+            className="bg-white rounded-xl shadow-md p-3 md:p-4 min-h-[90px]
                        flex flex-col justify-center focus:outline-none"
             tabIndex={0}
           >
-            <div className="text-3xl font-bold text-[#1F5C8C]">
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1F5C8C]">
               {years}+
             </div>
-            <div className="text-sm font-medium tracking-wide">
+            <div className="text-[10px] md:text-sm font-medium tracking-wide leading-tight">
               Years of Experience
             </div>
           </motion.div>
@@ -87,14 +87,14 @@ export default function WhyChoose() {
             whileHover={{ scale: 1.03 }}
             whileFocus={{ scale: 1.03 }}
             transition={{ type: "spring", stiffness: 250, damping: 18 }}
-            className="bg-white rounded-xl shadow-md p-4 h-[90px]
+            className="bg-white rounded-xl shadow-md p-3 md:p-4 min-h-[90px]
                        flex flex-col justify-center focus:outline-none"
             tabIndex={0}
           >
-            <div className="text-3xl font-bold text-[#1F5C8C]">
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1F5C8C]">
               {students}+
             </div>
-            <div className="text-sm font-medium tracking-wide">
+            <div className="text-[10px] md:text-sm font-medium tracking-wide leading-tight">
               Students Empowered Through Art
             </div>
           </motion.div>
@@ -118,7 +118,7 @@ export default function WhyChoose() {
               viewport={{ once: true }}
               className="bg-gradient-to-r from-[#F4F9FF] to-white
 rounded-lg shadow-md
-px-5 py-3 h-[56px]
+px-5 py-3 min-h-[56px]
 flex items-center gap-3
 border-l-4 border-[#1F5C8C]
 focus:outline-none"
@@ -128,7 +128,7 @@ focus:outline-none"
               {/* Pointer Dot */}
               <span className="w-3 h-3 rounded-full bg-gradient-to-r from-[#1F5C8C] to-[#0F2A44] flex-shrink-0" />
 
-              <span className="text-[15px] md:text-base font-semibold text-[#1F5C8C] tracking-wide">
+              <span className="text-sm md:text-base font-semibold text-[#1F5C8C] tracking-wide">
                 {item}
               </span>
             </motion.div>

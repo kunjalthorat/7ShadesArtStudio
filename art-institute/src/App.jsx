@@ -20,6 +20,7 @@ const LazyWhyChoose = lazy(() => import('./components/WhyChoose'))
 const LazyContact = lazy(() => import('./components/Contact'))
 const LazyRatings = lazy(() => import('./components/Ratings'))
 const LazyGallery = lazy(() => import('./components/Gallery'))
+const LazyVideoGallery = lazy(() => import('./components/VideoGallery'))
 
 const LoadingPlaceholder = () => (
   <div className="min-h-screen bg-white flex items-center justify-center">
@@ -29,56 +30,63 @@ const LoadingPlaceholder = () => (
 
 function App() {
   return (
-    <>
+    <div className="overflow-x-hidden w-full relative bg-black">
       <Header />
-      <Routes>
-        <Route path="/" element={
-          <>
-            <Hero />
+      <div className="relative">
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Hero />
+              <Suspense fallback={<LoadingPlaceholder />}>
+                <LazyCourses />
+              </Suspense>
+              <Suspense fallback={<LoadingPlaceholder />}>
+                <LazyAboutMission />
+              </Suspense>
+              <Suspense fallback={<LoadingPlaceholder />}>
+                <LazyWhyChoose />
+              </Suspense>
+              <Suspense fallback={<LoadingPlaceholder />}>
+                <LazyRatings />
+              </Suspense>
+            </>
+          } />
+          <Route path="/courses" element={
             <Suspense fallback={<LoadingPlaceholder />}>
               <LazyCourses />
             </Suspense>
+          } />
+          <Route path="/courses-main" element={
             <Suspense fallback={<LoadingPlaceholder />}>
-              <LazyAboutMission />
+              <LazyCoursesMain />
             </Suspense>
+          } />
+          <Route path="/gallery" element={
             <Suspense fallback={<LoadingPlaceholder />}>
-              <LazyWhyChoose />
+              <LazyGallery />
             </Suspense>
+          } />
+          <Route path="/video-gallery" element={
             <Suspense fallback={<LoadingPlaceholder />}>
-              <LazyRatings />
+              <LazyVideoGallery />
             </Suspense>
-          </>
-        } />
-        <Route path="/courses" element={
-          <Suspense fallback={<LoadingPlaceholder />}>
-            <LazyCourses />
-          </Suspense>
-        } />
-        <Route path="/courses-main" element={
-          <Suspense fallback={<LoadingPlaceholder />}>
-            <LazyCoursesMain />
-          </Suspense>
-        } />
-        <Route path="/gallery" element={
-          <Suspense fallback={<LoadingPlaceholder />}>
-            <LazyGallery />
-          </Suspense>
-        } />
-        <Route path="/about" element={
-          <>
+          } />
+          <Route path="/about" element={
+            <>
+              <Suspense fallback={<LoadingPlaceholder />}>
+                <LazyAbout />
+              </Suspense>
+            </>
+          } />
+          <Route path="/contact" element={
             <Suspense fallback={<LoadingPlaceholder />}>
-              <LazyAbout />
+              <LazyContact />
             </Suspense>
-          </>
-        } />
-        <Route path="/contact" element={
-          <Suspense fallback={<LoadingPlaceholder />}>
-            <LazyContact />
-          </Suspense>
-        } />
-      </Routes>
+          } />
+        </Routes>
+      </div>
       <Footer />
-    </>
+    </div>
   )
 }
 

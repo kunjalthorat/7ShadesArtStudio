@@ -20,7 +20,7 @@ export default function Gallery() {
     setActive((i) => (i === images.length - 1 ? 0 : i + 1))
 
   return (
-    <section className="min-h-screen bg-white px-6 pt-24 pb-12">
+    <section className="min-h-screen bg-white px-4 sm:px-6 pt-20 sm:pt-24 pb-12">
 
       {/* MASONRY COLLAGE */}
       <div

@@ -15,14 +15,14 @@ export default function Footer() {
   const navigate = useNavigate()
 
   return (
-    <footer className="bg-[#123754] text-white px-10">
+    <footer className="bg-[#123754] text-white px-4 md:px-10 overflow-x-hidden">
 
       {/* ================= MAIN GRID ================= */}
-      <div className="max-w-7xl mx-auto grid md:grid-cols-5 gap-12 pt-24 pb-16">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 sm:gap-12 pt-16 sm:pt-24 pb-12 sm:pb-16">
 
         {/* BRAND */}
         <div>
-          <h2 className="text-2xl font-bold mb-4">7 Shades Art Studio</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">7 Shades Art Studio</h2>
           <p className="text-white/70 text-sm leading-relaxed">
             Inspiring creativity through art.
             A space where imagination meets skill and every artist finds their voice.
@@ -61,7 +61,7 @@ export default function Footer() {
           <h3 className="font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2 text-white/70 text-sm">
             <li>
-              <button 
+              <button
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' })
                   navigate('/gallery')
@@ -72,7 +72,7 @@ export default function Footer() {
               </button>
             </li>
             <li>
-              <button 
+              <button
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' })
                   navigate('/courses-main')
@@ -83,7 +83,7 @@ export default function Footer() {
               </button>
             </li>
             <li>
-              <button 
+              <button
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' })
                   navigate('/about')
@@ -94,7 +94,7 @@ export default function Footer() {
               </button>
             </li>
             <li>
-              <button 
+              <button
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' })
                   navigate('/contact')

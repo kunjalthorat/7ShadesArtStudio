@@ -67,28 +67,28 @@ export default function Ratings() {
     return "⭐".repeat(stars)
   }
   return (
-    <main 
-      className="bg-white text-black min-h-screen py-16 bg-cover bg-center bg-no-repeat overflow-hidden flex flex-col items-center justify-center" 
+    <main
+      className="bg-white text-black min-h-screen py-16 bg-cover bg-center bg-no-repeat overflow-hidden flex flex-col items-center justify-center"
       style={{ backgroundImage: `url(${bgOrange})` }}
     >
 
       {/* RATINGS CARDS CENTERED */}
-      <div className="flex items-center justify-center mb-12">
+      <div className="flex items-center justify-center mb-12 w-full px-6">
         <motion.div
-          className="flex gap-6 justify-center"
-          initial={{ x: 100, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
+          className="flex flex-col md:flex-row gap-4 md:gap-6 justify-center w-full max-w-lg md:max-w-none"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
           {ratings.map((item, i) => (
             <motion.div
               key={i}
               whileHover={{ y: -6 }}
-              className="min-w-[220px] border border-[#123754] p-4 bg-[#123754] rounded-lg flex flex-col justify-center"
+              className="flex-1 min-w-[180px] sm:min-w-[200px] border border-[#123754] p-3 sm:p-4 bg-[#123754] rounded-lg flex flex-col justify-center"
             >
-              <h3 className="text-base font-semibold mb-1 text-white">{item.platform}</h3>
-              <p className="text-xl font-bold mb-1 text-yellow-400">{item.rating}</p>
-              <p className="text-white/80 text-xs">{item.text}</p>
+              <h3 className="text-sm sm:text-base font-semibold mb-1 text-white">{item.platform}</h3>
+              <p className="text-lg sm:text-xl font-bold mb-1 text-yellow-400">{item.rating}</p>
+              <p className="text-white/80 text-[10px] sm:text-xs">{item.text}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -98,22 +98,22 @@ export default function Ratings() {
       <div className="flex-1 h-full items-center w-full overflow-hidden">
         <div
           ref={trackRef}
-          className="flex px-10 h-[320px] w-max items-center gap-8 -mx-10"
+          className="flex px-10 h-[280px] sm:h-[320px] w-max items-center gap-6 sm:gap-8 -mx-10"
         >
           {[...reviews, ...reviews].map((review, i) => (
             <motion.div
               key={i}
               whileHover={{ y: -4, boxShadow: "0 12px 24px rgba(0,0,0,0.15)" }}
-              className="w-[300px] h-[280px] bg-white rounded-xl shadow-lg p-5 border-t-4 border-[#1F5C8C] flex flex-col justify-between transition-shadow duration-300 flex-shrink-0"
+              className="w-[260px] sm:w-[300px] h-[240px] sm:h-[280px] bg-white rounded-xl shadow-lg p-4 sm:p-5 border-t-4 border-[#1F5C8C] flex flex-col justify-between transition-shadow duration-300 flex-shrink-0"
             >
               <div>
-                <p className="text-yellow-400 text-sm mb-3 tracking-wide">{renderStars(review.stars)}</p>
-                <p className="text-black/70 leading-relaxed text-xs font-normal line-clamp-4">
+                <p className="text-yellow-400 text-xs sm:text-sm mb-2 sm:mb-3 tracking-wide">{renderStars(review.stars)}</p>
+                <p className="text-black/70 leading-relaxed text-[10px] sm:text-xs font-normal line-clamp-4 sm:line-clamp-none">
                   "{review.text}"
                 </p>
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <p className="text-sm font-bold text-[#1F5C8C]">{review.name}</p>
+              <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
+                <p className="text-xs sm:text-sm font-bold text-[#1F5C8C]">{review.name}</p>
               </div>
             </motion.div>
           ))}
