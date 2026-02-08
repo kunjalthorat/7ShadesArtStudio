@@ -77,7 +77,7 @@ export default function About() {
           </h1>
 
           <p className="text-base sm:text-lg text-black/75 leading-relaxed">
-            7 Shades Art Studio in Punawale, Pune is a premier destination for
+            7 Shades Art Studio in Punawale, PCMC, Pune is a premier destination for
             hobby enthusiasts of all ages. <b>Established in 2010</b>, we provide
             enriching, hands-on learning experiences in art, music, calligraphy,
             and skill development guided by passionate instructors in a warm and
@@ -92,7 +92,7 @@ export default function About() {
         >
           <LazyImage
             src={heroImg}
-            alt="7 Shades Art Studio - Premier Art Institute in Punawale, Pune"
+            alt="7 Shades Art Studio - Premier Art Institute in PCMC"
             className="w-full h-[250px] sm:h-[360px] object-cover rounded-2xl shadow-md"
           />
         </motion.div>
@@ -114,7 +114,7 @@ export default function About() {
           <h3 className="text-xl sm:text-2xl font-bold">Overview</h3>
 
           <p className="text-base sm:text-lg text-black/80 leading-relaxed">
-            7 Shades Art Studio in Punawale, Pune has grown into a trusted creative
+            7 Shades Art Studio in Punawale, PCMC, Pune has grown into a trusted creative
             learning hub since <b>2010</b>. What started as a small
             passion-driven initiative has evolved into a vibrant studio where
             creativity, self-expression, and confidence are nurtured every day.

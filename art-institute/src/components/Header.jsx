@@ -11,11 +11,6 @@ export default function Header() {
   /* ---------------------------------- */
   /* INFO ITEMS */
   /* ---------------------------------- */
-  const infoItems = [
-    { icon: <FaPhoneAlt />, text: "+91 98765 43210" },
-    { icon: <FaWhatsapp />, text: "WhatsApp: +91 98765 43210" },
-    { icon: <FaMapMarkerAlt />, text: "Punawale, Pune, Maharashtra" },
-  ]
 
   const { scrollY } = useScroll()
   const navigate = useNavigate()

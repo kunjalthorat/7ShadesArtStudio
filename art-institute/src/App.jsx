@@ -30,12 +30,12 @@ import { useEffect } from 'react'
 
 const SEO_DATA = {
   "/": {
-    title: "Best Art & Music Classes in Punawale, Pune | 7 Shades Art Studio",
+    title: "Best Art & Music Classes in PCMC | 7 Shades Art Studio",
     description: "Unleash your creativity at 7 Shades Art Studio, Punawale. Professional drawing, painting, and music classes for kids and adults. Expert faculty and certified courses."
   },
   "/courses-main": {
     title: "Art & Music Courses in Pune | 7 Shades Art Studio",
-    description: "Explore our professional courses in Fine Arts, Sketching, Oil Painting, Guitar, and Piano. Certified curriculum tailored for all age groups in Punawale, Pune."
+    description: "Explore our professional courses in Fine Arts, Sketching, Oil Painting, Guitar, and Piano. Certified curriculum tailored for all age groups in PCMC."
   },
   "/gallery": {
     title: "Art Gallery - Student Masterpieces | 7 Shades Art Studio",
