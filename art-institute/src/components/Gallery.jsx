@@ -42,8 +42,11 @@ function GalleryItem({ src, index, onSelect }) {
         alt={`Creative student artwork ${index + 1} at 7 Shades Art Studio Pune`}
       />
 
-      {/* HOVER OVERLAY */}
-      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+      {/* SECURITY OVERLAY - STOPS RIGHT CLICK & DRAG ON IMAGE SOURCE */}
+      <div className="absolute inset-0 z-10 select-none bg-transparent" onContextMenu={(e) => e.preventDefault()} />
+
+      {/* HOVER OVERLAY Decoration */}
+      <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl z-20" />
     </motion.div>
   )
 }
@@ -141,6 +144,12 @@ export default function Gallery() {
                 animate={{ scale: 1, opacity: 1, x: 0 }}
                 exit={{ scale: 0.9, opacity: 0, x: -20 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              />
+              {/* Invisible Shield */}
+              <div
+                className="absolute inset-0 z-[120] cursor-default bg-transparent"
+                onContextMenu={(e) => e.preventDefault()}
+                onDragStart={(e) => e.preventDefault()}
               />
             </div>
 

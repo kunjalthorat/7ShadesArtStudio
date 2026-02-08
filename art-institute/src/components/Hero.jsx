@@ -35,6 +35,8 @@ export default function Hero() {
         muted
         loop
         playsInline
+        controlsList="nodownload"
+        disablePictureInPicture
         onCanPlayThrough={() => setIsVideoReady(true)}
         className={`absolute inset-0 w-full h-full object-cover brightness-90 z-[1] transition-opacity duration-1000 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
         preload="auto"

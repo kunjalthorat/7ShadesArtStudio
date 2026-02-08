@@ -75,6 +75,64 @@ function useSEO() {
   }, [location])
 }
 
+/* HIGH-LEVEL CONTENT PROTECTION */
+function useContentProtection() {
+  useEffect(() => {
+    // 1. Disable Context Menu (Right Click)
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
+    // 2. Disable Keyboard Shortcuts (F12, Ctrl+Shift+I, Ctrl+U, etc.)
+    const handleKeyDown = (e) => {
+      // F12
+      if (e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+Shift+I (Inspect)
+      if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+U (View Source)
+      if (e.ctrlKey && e.keyCode === 85) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+S (Save Page)
+      if (e.ctrlKey && e.keyCode === 83) {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+P (Print - can be used to capture images)
+      if (e.ctrlKey && e.keyCode === 80) {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    // 3. Disable Print Screen / Screenshot Attempts (Limited but helpful)
+    const handleKeyUp = (e) => {
+      if (e.keyCode === 44) {
+        navigator.clipboard.writeText("");
+        alert("Screenshots are disabled for privacy protection.");
+      }
+    };
+
+    document.addEventListener("contextmenu", handleContextMenu);
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+}
+
 const LoadingPlaceholder = () => (
   <div className="min-h-screen bg-white flex items-center justify-center">
     <div className="w-8 h-8 border-4 border-gray-300 border-t-gray-900 rounded-full animate-spin" />
@@ -160,5 +218,6 @@ function AppContent() {
 
 export default function App() {
   useSEO()
+  useContentProtection()
   return <AppContent />
 }

@@ -91,10 +91,16 @@ export default function VideoGallery() {
                             <video
                                 src={active.url}
                                 controls
+                                controlsList="nodownload"
+                                disablePictureInPicture
                                 autoPlay
                                 muted={isMuted}
                                 className="w-full h-full object-contain rounded-2xl"
+                                onContextMenu={(e) => e.preventDefault()}
                             />
+                            {/* Shield - slightly offset to allow access to controls if needed, 
+                                but here we rely on the video's own onContextMenu protection as well */}
+                            <div className="absolute inset-0 z-10 bg-transparent pointer-events-none" />
                         </motion.div>
 
                         {/* Video Info */}
@@ -152,16 +158,25 @@ function VideoCard({ video, onClick, index }) {
                     muted
                     loop
                     playsInline
+                    controlsList="nodownload"
+                    disablePictureInPicture
                     className="w-full h-auto transition-transform duration-700 group-hover:scale-105 rounded-t-2xl"
                 />
 
+                {/* SECURITY SHIELD */}
+                <div
+                    className="absolute inset-0 z-10 bg-transparent"
+                    onContextMenu={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
+                />
+
                 {/* Overlay Decoration */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500 z-[5]" />
 
                 {/* Play Icon */}
                 <motion.div
                     animate={{ scale: isHovered ? 1.1 : 1 }}
-                    className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                    className="absolute inset-0 flex items-center justify-center pointer-events-none z-20"
                 >
                     <div className="w-12 h-12 sm:w-14 sm:h-14 bg-yellow-400 rounded-full flex items-center justify-center shadow-xl transform transition-transform duration-300 group-hover:bg-white">
                         <Play fill="currentColor" className="text-[#1F5C8C] ml-1" size={24} />
